@@ -62,11 +62,16 @@ app.post("/api/shorturl",  function(req, res) {
   console.log(req.body);
   const bodyUrl = req.body.url
   const hostName = urlParser(bodyUrl).hostname;
+
   console.log("urlParseBody:" , urlParser(bodyUrl));
-  
   console.log("hostname: ", hostName);
 
   const lookupResolution = dns.lookup(hostName, function(err, address, family) {
+    let prefix = bodyUrl.substring(0, 4);
+    console.log("prefix: ", prefix);
+    if (!(prefix === "http")) {
+      res.json({error: 'invalid url'});
+    }
     if (err || !address){ res.json({ error: 'invalid url' })}
     else {
       
