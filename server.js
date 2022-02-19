@@ -43,7 +43,7 @@ app.post("/api/shorturl", function(req, res) {
   console.log("hostname: ", hostName);
 
   const lookupResolution = dns.lookup(hostName, function(err, address) {
-    if (err){ res.json({ error: 'Invalid Url'})}
+    if (err){ res.json({ error: 'invalid url'})}
     else {
       const ori_url = new Url({ url_ori: bodyUrl, hostname: hostName })
       ori_url.save((err, data) => {
@@ -62,7 +62,7 @@ app.get("/api/shorturl/:id", function(req, res) {
   const id = req.params.id
   Url.findById(id, function(err, result) {
     if (err) {
-      res.json({ error: 'Invalid Url'});
+      res.json({ error: 'invalid url'});
     } else {
       res.redirect(result.url_ori);
     }
